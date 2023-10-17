@@ -1,0 +1,85 @@
+# {{ ansible_managed }}
+
+# ~/.bashrc: executed by bash(1) for non-login shells.
+
+# If not running interactively, don't do anything
+case $- in
+    *i*) ;;
+      *) return;;
+esac
+
+
+#--- History Configuration
+
+HISTCONTROL={{ bash_rc_history_control }}
+HISTFILE={{ bash_rc_history_file }}
+HISTFILESIZE={{ bash_rc_history_file_size }}
+{% if bash_rc_history_ignore != "" %}
+HISTIGNORE={{ bash_rc_history_ignore }}
+{% endif %}
+HISTSIZE={{ bash_rc_history_size }}
+{% if bash_rc_history_time_enabled %}
+HISTTIMEFORMAT={{ bash_rc_history_time_format | quote }}
+{% endif %}
+
+
+#--- Shell Optional Behaviors
+
+{% for behavior in bash_rc_shell_behaviors | dict2items %}
+shopt {% if behavior.value -%}-s{%- else -%}-u{%- endif %} {{ behavior.key }}
+{% endfor %}
+
+
+#--- Prompt Configuration
+
+{% if bash_rc_include_chroot_prompt %}
+# set variable identifying the chroot you work in (used in the prompt below)
+if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
+    debian_chroot=$(cat /etc/debian_chroot)
+fi
+{% endif %}
+
+{% if bash_rc_color_include_config %}
+PS1='{%- if bash_rc_include_chroot_prompt -%}${debian_chroot:+($debian_chroot)}{%- endif -%}{{ _color_prompt }}'
+
+if [ -x /usr/bin/dircolors ]; then
+    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+    alias ls='ls --color=auto'
+    alias grep='grep --color=auto'
+    alias fgrep='fgrep --color=auto'
+    alias egrep='egrep --color=auto'
+fi
+{% if bash_rc_color_include_gcc_config %}
+
+# colored GCC warnings and errors
+export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
+{% endif %}
+{% else %}
+PS1='{%- if bash_rc_include_chroot_prompt -%}${debian_chroot:+($debian_chroot)}{%- endif -%}{{ _nocolor_prompt }}'
+{% endif %}
+
+
+#--- Alias Configuration
+
+# Default Aliases
+{% if bash_rc_alias_include_defaults %}
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+{% endif %}
+
+# Additional Aliases
+{% for alias in bash_rc_alias_additionals | dict2items %}
+alias {{ alias.key }}='{{ alias.value }}'
+{% endfor %}
+
+
+#--- Additional Configuration
+{% if bash_rc_include_lesspipe %}
+
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+{% endif %}
+{% if bash_rc_additional_config != "" %}
+
+{{ bash_rc_additional_config }}
+{% endif %}

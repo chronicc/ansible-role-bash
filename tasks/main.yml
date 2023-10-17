@@ -1,0 +1,9 @@
+---
+- name: Run install tasks.
+  ansible.builtin.include_tasks: install.yml
+
+- name: Run user configuration tasks.
+  ansible.builtin.include_tasks: configure_user.yml
+  loop: "{{ bash_configure_users }}"
+  loop_control:
+    loop_var: _user

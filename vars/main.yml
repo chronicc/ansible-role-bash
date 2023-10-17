@@ -1,0 +1,9 @@
+---
+bash_home_files:
+  - .bashrc
+  - .bash_logout
+
+bash_home_root_base_path: /
+bash_home_user_base_path: /home/
+bash_home_base_path: "{{ bash_home_user_base_path }}"
+bash_package: bash

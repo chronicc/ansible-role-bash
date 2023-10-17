@@ -1,0 +1,144 @@
+---
+# If this is enabled, bash files in users home directories are backed up before being overwritten.
+bash_backup_home_files: yes
+
+# A dictionary of users for which bash files are configured.
+bash_configure_users: []
+# bash_configure_users:
+#   - name: root
+
+
+# --- bash_logout
+
+# If this is enabled, the screen will be cleared during logout.
+# From a comfort and privacy perspective, this is a good idea.
+bash_logout_clear_screen: yes
+
+
+# --- bashrc
+
+# Add additional configuration to the end of the bashrc.
+bash_rc_additional_config: ""
+
+# If this is enabled, the default aliases are included in the bashrc.
+bash_rc_alias_include_defaults: yes
+
+# A dictionary of additional aliases to be added to the bashrc.
+bash_rc_alias_additionals: {}
+# bash_rc_alias_additionals:
+#   alert: >
+#     notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)"
+#     "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"
+
+# If this is enabled, the prompt will be changed according to the chroot you are in.
+bash_rc_include_chroot_prompt: yes
+
+# If this is enabled, the terminal will be configured to support colors.
+bash_rc_color_include_config: yes
+
+# If this is enabled, the terminal will be configured to support colors for gcc.
+bash_rc_color_include_gcc_config: no
+
+# The colorized prompt used for the root user.
+bash_rc_color_root_prompt: "\\[\033[01;31m\\]\\u@\\h\\[\033[00m\\]:\\[\033[01;34m\\]\\w\\[\033[00m\\]\\$ "
+
+# The colorized prompt used for non-root users.
+bash_rc_color_user_prompt: "\\[\033[01;32m\\]\\u@\\h\\[\033[00m\\]:\\[\033[01;34m\\]\\w\\[\033[00m\\]\\$ "
+
+# The non-colorized prompt used for the root user.
+bash_rc_nocolor_root_prompt: "\\u@\\h:\\w\\$ "
+
+# The non-colorized prompt used for non-root users.
+bash_rc_nocolor_user_prompt: "\\u@\\h:\\w\\$ "
+
+# If this is enabled, lesspipe will be used to display files in a more readable format.
+# Requires the lesspipe binary to be available on the system.
+bash_rc_include_lesspipe: no
+
+# If this is disabled, no history will be saved.
+bash_rc_history_enabled: yes
+
+# A  colon-separated list of values controlling how commands are saved on the history list.
+# Possible values are:
+# - `ignorespace`: Lines which begin with a space character are not saved.
+# - `ignoredups`: Lines matching a previous history entry are not saved.
+# - `ignoreboth`: Shorthand for `ignorespace` and `ignoredups`.
+# - `erasedups`: All previous lines matching the current line will be removed before that line is saved.
+# See bash(1) HISTCONTROL for more details.
+bash_rc_history_control: ignoreboth
+
+# The name of the file in which command history is saved.
+# See bash(1) HISTFILE for more details.
+bash_rc_history_file: ~/.bash_history
+
+# The  maximum  number of lines contained in the history file.
+# When this variable is assigned a value, the history file is truncated, if necessary,
+# to contain no more than that number of lines by removing the oldest entries.
+# See bash(1) HISTFILESIZE for more details.
+bash_rc_history_file_size: 4000
+
+# A colon-separated list of patterns used to decide which command lines should be saved on the history list.
+# See bash(1) HISTIGNORE for more details.
+bash_rc_history_ignore: ""
+
+# The number of commands to remember in the command history.
+# See bash(1) HISTSIZE for more details.
+bash_rc_history_size: 4000
+
+# If this is enabled, timestamps are written to the history file so they may be preserved across shell sessions.
+bash_rc_history_time_enabled: no
+
+# The format of the timestamp used by the history builtin to display the time.
+# See bash(1) HISTTIMEFORMAT for more details.
+bash_rc_history_time_format: "%Y-%m-%d %H:%M:%S "
+
+# Toggle the values of settings controlling optional shell behavior.
+# See https://www.gnu.org/software/bash/manual/html_node/The-Shopt-Builtin.html for more details.
+bash_rc_shell_behaviors:
+  autocd: no
+  cdable_vars: no
+  cdspell: no
+  checkhash: no
+  checkjobs: no
+  checkwinsize: no
+  cmdhist: yes
+  compat31: no
+  compat32: no
+  compat40: no
+  compat41: no
+  compat42: no
+  compat43: no
+  compat44: no
+  direxpand: no
+  dirspell: no
+  dotglob: no
+  execfail: no
+  expand_aliases: yes
+  extdebug: no
+  extglob: no
+  extquote: yes
+  failglob: no
+  force_fignore: yes
+  globstar: no
+  gnu_errfmt: no
+  histappend: no
+  histreedit: no
+  histverify: no
+  hostcomplete: yes
+  huponexit: no
+  interactive_comments: yes
+  lastpipe: no
+  lithist: no
+  login_shell: no
+  mailwarn: no
+  no_empty_cmd_completion: no
+  nocaseglob: no
+  nocasematch: no
+  nullglob: no
+  progcomp: yes
+  promptvars: yes
+  restricted_shell: no
+  shift_verbose: no
+  sourcepath: yes
+  syslog_history: no
+  xpg_echo: no

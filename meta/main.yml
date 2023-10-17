@@ -1,0 +1,27 @@
+galaxy_info:
+  author: chronicc
+  role_name: bash
+  description: Setup and configure the bourne again shell (bash).
+  license: MIT / BSD-3-Clause
+  min_ansible_version: '2.10'
+  platforms:
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+    - name: EL
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+  galaxy_tags:
+    - bash
+    - config
+    - install
+    - shell
+    - uninstall
+
+dependencies: []

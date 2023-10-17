@@ -1,0 +1,35 @@
+---
+- name: Set home base path for root user.
+  ansible.builtin.set_fact:
+    bash_home_base_path: "{{ bash_home_root_base_path }}"
+  when: _user.name == "root"
+
+- name: Set color prompt for root user.
+  ansible.builtin.set_fact:
+    _color_prompt: "{{ bash_rc_color_root_prompt }}"
+  when: _user.name == "root"
+
+- name: Set color prompt for non-root user.
+  ansible.builtin.set_fact:
+    _color_prompt: "{{ bash_rc_color_user_prompt }}"
+  when: _user.name != "root"
+
+- name: Set nocolor prompt for root user.
+  ansible.builtin.set_fact:
+    _nocolor_prompt: "{{ bash_rc_nocolor_root_prompt }}"
+  when: _user.name == "root"
+
+- name: Set nocolor prompt for non-root user.
+  ansible.builtin.set_fact:
+    _nocolor_prompt: "{{ bash_rc_nocolor_user_prompt }}"
+  when: _user.name != "root"
+
+- name: "Write bash home files for {{ _user.name }}."
+  ansible.builtin.template:
+    src: "{{ item }}.j2"
+    dest: "{{ bash_home_base_path }}{{ _user.name }}/{{ item }}"
+    owner: "{{ _user.name }}"
+    group: "{{ _user.name }}"
+    mode: "0644"
+    backup: "{{ bash_backup_home_files }}"
+  loop: "{{ bash_home_files }}"
