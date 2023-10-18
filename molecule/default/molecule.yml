@@ -6,7 +6,7 @@ driver:
   name: docker
 platforms:
   - name: instance
-    image: "${MOLECULE_DISTRO:-centos:7}"
+    image: "${MOLECULE_DISTRO:-almalinux:8}"
 provisioner:
   name: ansible
   lint:
