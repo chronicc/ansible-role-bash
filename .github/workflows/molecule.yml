@@ -1,0 +1,32 @@
+name: molecule
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  molecule:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        distribution:
+          - almalinux:8
+          - almalinux:9
+          - debian:11
+          - debian:12
+          - fedora:37
+          - fedora:38
+          - ubuntu:20.04
+          - ubuntu:22.04
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: gofrolist/molecule-action@v2
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+          MOLECULE_DISTRO: '${{ matrix.distribution }}'

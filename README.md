@@ -1,5 +1,8 @@
 # Ansible Role: Bash
 
+![pre-commit](https://github.com/chronicc/ansible-role-bash/actions/workflows/pre-commit.yml/badge.svg?branch=main)
+![molecule](https://github.com/chronicc/ansible-role-bash/actions/workflows/molecule.yml/badge.svg?branch=main)
+
 Setup and configure the bourne again shell (bash).
 
 Configuration will only be applied to bash config files in user home directories. No systemwide files will be touched. Use this role to configure your root user or if you want to provide a consistent shell experience for multiple workstations (e.g. when preparing a workshop).
