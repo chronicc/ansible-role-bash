@@ -17,8 +17,8 @@ jobs:
         distribution:
           - centos:7
           - centos:8
-          - debian:9
-          - debian:10
+          - debian:11
+          - debian:12
           - fedora:37
           - fedora:38
           - ubuntu:20.04
