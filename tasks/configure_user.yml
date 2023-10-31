@@ -1,8 +1,13 @@
 ---
 - name: Set home base path for root user.
   ansible.builtin.set_fact:
-    bash_home_base_path: "{{ bash_home_root_base_path }}"
+    _bash_home_base_path: "{{ bash_home_root_base_path }}"
   when: _user.name == "root"
+
+- name: Set home base path for non-root user.
+  ansible.builtin.set_fact:
+    _bash_home_base_path: "{{ bash_home_user_base_path }}"
+  when: _user.name != "root"
 
 - name: Set color prompt for root user.
   ansible.builtin.set_fact:
@@ -27,7 +32,7 @@
 - name: "Write bash home files for {{ _user.name }}."
   ansible.builtin.template:
     src: "{{ item }}.j2"
-    dest: "{{ bash_home_base_path }}{{ _user.name }}/{{ item }}"
+    dest: "{{ _bash_home_base_path }}{{ _user.name }}/{{ item }}"
     owner: "{{ _user.name }}"
     group: "{{ _user.name }}"
     mode: "0644"

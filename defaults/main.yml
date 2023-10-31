@@ -40,10 +40,10 @@ bash_rc_color_include_config: yes
 bash_rc_color_include_gcc_config: no
 
 # The colorized prompt used for the root user.
-bash_rc_color_root_prompt: "\\[\033[01;31m\\]\\u@\\h\\[\033[00m\\]:\\[\033[01;34m\\]\\w\\[\033[00m\\]\\$ "
+bash_rc_color_root_prompt: "\\[\\033[01;31m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ "
 
 # The colorized prompt used for non-root users.
-bash_rc_color_user_prompt: "\\[\033[01;32m\\]\\u@\\h\\[\033[00m\\]:\\[\033[01;34m\\]\\w\\[\033[00m\\]\\$ "
+bash_rc_color_user_prompt: "\\[\\033[01;32m\\]\\u@\\h\\[\\033[00m\\]:\\[\\033[01;34m\\]\\w\\[\\033[00m\\]\\$ "
 
 # The non-colorized prompt used for the root user.
 bash_rc_nocolor_root_prompt: "\\u@\\h:\\w\\$ "
