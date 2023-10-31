@@ -6,6 +6,7 @@
   vars:
     bash_configure_users:
       - name: root
+      - name: user1
 
   pre_tasks:
     - name: Update apt cache.
@@ -13,6 +14,13 @@
         cache_valid_time: 600
         update_cache: yes
       when: ansible_os_family == 'Debian'
+
+    - name: Create user1
+      ansible.builtin.user:
+        name: user1
+        shell: /bin/bash
+        createhome: yes
+        state: present
 
   roles:
     - role: chronicc.bash
