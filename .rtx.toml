@@ -1,0 +1,16 @@
+env_path = [
+  ".venv/bin"
+]
+
+[tools]
+poetry = "1.6.1"
+
+[env]
+# poetry
+POETRY_ACTIVE="1"
+POETRY_VIRTUALENVS_PATH=".venv"
+VIRTUAL_ENV=".venv"
+
+# rtx
+RTX_EXPERIMENTAL="1"
+RTX_FETCH_REMOTE_VERSIONS_TIMEOUT="30s"
