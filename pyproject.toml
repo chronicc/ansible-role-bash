@@ -16,7 +16,7 @@ ansible-lint = { version = "^6", markers = "platform_system != 'Windows'" }
 molecule = "^6"
 molecule-plugins = { extras = ["docker"], version = "^23" }
 pre-commit = "^2"
-requests = "2.31.0" # see https://github.com/docker/docker-py/issues/3113 (urllibv3 incompatibility with requests > 2.28.0)
+requests = "2.32.0" # see https://github.com/docker/docker-py/issues/3113 (urllibv3 incompatibility with requests > 2.28.0)
 
 [build-system]
 requires = ["poetry-core"]
