@@ -26,7 +26,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: gofrolist/molecule-action@v2
+      - uses: gofrolist/molecule-action@v2.7.5
         env:
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: '${{ matrix.distribution }}'
