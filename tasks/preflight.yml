@@ -1,0 +1,22 @@
+---
+- name: Determine all ca hosts.
+  ansible.builtin.set_fact:
+    ____nebula_ca_hosts: "{{ ____nebula_ca_hosts + [item] }}"
+  when: hostvars[item]['nebula_is_ca']
+  loop: "{{ ansible_play_hosts_all }}"
+
+- name: Ensure there is only a single host in nebula_ca_hosts.
+  ansible.builtin.assert:
+    that: __nebula_ca_hosts | length == 1
+    fail_msg: "Found {{ __nebula_ca_hosts | length }} ca hosts: [{{ __nebula_ca_hosts | join(', ') }}]"
+
+- name: Determine all lighthouses.
+  ansible.builtin.set_fact:
+    __nebula_lighthouses: "{{ __nebula_lighthouses + [item] }}"
+  when: hostvars[item]['nebula_is_lighthouse']
+  loop: "{{ ansible_play_hosts_all }}"
+
+- name: Ensure the ca host is not a lighthouse.
+  ansible.builtin.assert:
+    that: __nebula_ca_hosts[0] not in __nebula_lighthouses
+    fail_msg: "The ca host must not be a lighthouse."

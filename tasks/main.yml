@@ -1,9 +1,31 @@
 ---
-- name: Run install tasks.
-  ansible.builtin.include_tasks: install.yml
+- name: Run role.
+  when: nebula_enable | bool
+  become: true
+  block:
+    - name: Run preflight checks.
+      ansible.builtin.include_tasks: preflight.yml
 
-- name: Run user configuration tasks.
-  ansible.builtin.include_tasks: configure_user.yml
-  loop: "{{ bash_configure_users }}"
-  loop_control:
-    loop_var: _user
+    - name: Run install target.
+      when: nebula_target == "install"
+      block:
+        - name: Run install tasks.
+          ansible.builtin.include_tasks: install.yml
+
+        - name: Run ca tasks.
+          ansible.builtin.include_tasks: ca.yml
+
+        - name: Run config tasks.
+          ansible.builtin.include_tasks: config.yml
+
+    # - name: Run renew target.
+    #   when: nebula_target == "renew"
+    #   block:
+    #     - name: Run renew tasks.
+    #       ansible.builtin.include_tasks: renew.yml
+
+    # - name: Run revoke target.
+    #   when: nebula_target == "revoke"
+    #   block:
+    #     - name: Run revoke tasks.
+    #       ansible.builtin.include_tasks: revoke.yml

@@ -1,26 +1,31 @@
 ---
 - name: Converge
   hosts: all
+  become: yes
   gather_facts: yes
-
-  vars:
-    bash_configure_users:
-      - name: root
-      - name: user1
-
   pre_tasks:
     - name: Update apt cache.
       ansible.builtin.apt:
-        cache_valid_time: 600
+        cache_valid_time: 3600
         update_cache: yes
       when: ansible_os_family == 'Debian'
+      retries: 10
+      delay: 3
 
-    - name: Create user1
-      ansible.builtin.user:
-        name: user1
-        shell: /bin/bash
-        createhome: yes
+    - name: Install pip3.
+      ansible.builtin.package:
+        name: python3-pip
+        state: present
+
+    - name: Upgrade pip3.
+      ansible.builtin.pip:
+        name: pip
+        state: present
+
+    - name: Install github.py.
+      ansible.builtin.pip:
+        name: github3.py
         state: present
 
   roles:
-    - role: chronicc.bash
+    - role: chronicc.nebula

@@ -1,8 +1,9 @@
 ---
-bash_home_files:
-  - .bashrc
-  - .bash_logout
+__nebula_ca_cert_file: ca.crt
+__nebula_ca_key_file: ca.key
+__nebula_host_cert_file: host.crt
+__nebula_host_key_file: host.key
+__nebula_host_pub_file: host.pub
 
-bash_home_root_base_path: /
-bash_home_user_base_path: /home/
-bash_package: bash
+__nebula_lighthouses: []
+__nebula_ca_hosts: []

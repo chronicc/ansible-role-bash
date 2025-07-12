@@ -1,0 +1,14 @@
+[Unit]
+Description=Nebula overlay networking tool
+Wants=basic.target network-online.target nss-lookup.target time-sync.target
+After=basic.target network.target network-online.target
+Before=sshd.service
+
+[Service]
+SyslogIdentifier=nebula
+ExecReload=/bin/kill -HUP $MAINPID
+ExecStart={{ nebula_bin_dir }}/nebula -config {{ nebula_config_dir }}/{{ nebula_config_file }}
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

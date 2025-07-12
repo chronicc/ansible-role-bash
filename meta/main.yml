@@ -1,13 +1,11 @@
 galaxy_info:
   author: chronicc
-  role_name: bash
-  description: Setup and configure the bourne again shell (bash).
+  namespace: chronicc
+  role_name: nebula
+  description: Setup slackhq/nebula and manage certificates with autorenewal and revoking targets.
   license: MIT / BSD-3-Clause
   min_ansible_version: '2.10'
   platforms:
-    - name: Fedora
-      versions:
-        - all
     - name: Debian
       versions:
         - all
@@ -18,10 +16,15 @@ galaxy_info:
       versions:
         - all
   galaxy_tags:
-    - bash
-    - config
-    - install
-    - shell
-    - uninstall
+    - slackhq
+    - nebula
+    - setup
+    - certificates
+    - autorenewal
+    - revoking
+    - targets
+    - network
+    - performance
+    - security
 
 dependencies: []

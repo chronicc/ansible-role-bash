@@ -1,5 +1,75 @@
 ---
-- name: Install bash.
-  ansible.builtin.package:
-    name: "{{ bash_package }}"
-    state: present
+- name: Determine latest nebula version.
+  when: nebula_version == "latest"
+  block:
+    - name: Get latest release version from Github.
+      community.general.github_release:
+        user: slackhq
+        repo: nebula
+        action: latest_release
+      register: __nebula_release
+
+    - name: Set nebula version.
+      ansible.builtin.set_fact:
+        nebula_version: "{{ __nebula_release.tag }}"
+
+
+- name: Determine checksum for nebula.
+  when: nebula_checksum == ""
+  block:
+    - name: Download nebula checksum file.
+      ansible.builtin.get_url:
+        url: "{{ nebula_checksum_url }}"
+        dest: "{{ nebula_download_dir }}/nebula.checksum.txt"
+        mode: "0644"
+
+    - name: Read nebula checksum file.
+      ansible.builtin.slurp:
+        src: "{{ nebula_download_dir }}/nebula.checksum.txt"
+      register: __nebula_checksums
+
+    - name: Get nebula checksum.
+      ansible.builtin.set_fact:
+        __nebula_checksum: >-
+          {{
+            __nebula_checksums.content
+            | b64decode
+            | regex_search('^.*nebula-linux-' + nebula_arch + '.tar.gz', multiline=True)
+            | split(' ')
+            | first
+          }}
+
+    - name: Set nebula checksum.
+      ansible.builtin.set_fact:
+        nebula_checksum: "{{ nebula_checksum_algorithm }}:{{ __nebula_checksum }}"
+
+
+- name: Install nebula.
+  block:
+    - name: Download nebula archive.
+      ansible.builtin.get_url:
+        url: "{{ nebula_download_url }}"
+        dest: "{{ nebula_download_dir }}/nebula.tar.gz"
+        checksum: "{{ nebula_checksum }}"
+        mode: "0644"
+
+    - name: Extract nebula archive.
+      ansible.builtin.unarchive:
+        src: "{{ nebula_download_dir }}/nebula.tar.gz"
+        dest: "{{ nebula_bin_dir }}"
+        remote_src: true
+
+    - name: Create nebula config directory.
+      ansible.builtin.file:
+        path: "{{ nebula_config_dir }}"
+        state: directory
+        mode: "0755"
+
+    - name: Write nebula systemd file.
+      ansible.builtin.template:
+        src: nebula.service.j2
+        dest: /etc/systemd/system/nebula.service
+        mode: "0644"
+      notify:
+        - daemon reload
+        - restart nebula

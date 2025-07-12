@@ -3,13 +3,25 @@ role_name_check: 1
 dependency:
   name: galaxy
 driver:
-  name: docker
+  name: vagrant
+  provider:
+    name: libvirt
 platforms:
   - name: instance
-    image: "${MOLECULE_DISTRO:-almalinux:8}"
+    box: "${MOLECULE_DISTRO:-generic/ubuntu2204}"
+    memory: 2048
+    cpus: 2
+    interfaces:
+      - network_name: private_network
+        type: dhcp
+    config_options:
+      ssh.remote_user: vagrant
 provisioner:
   name: ansible
   lint:
     name: ansible-lint
+  options:
+    diff: true
+    verbose: true
 verifier:
   name: ansible

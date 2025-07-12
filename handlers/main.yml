@@ -1,0 +1,18 @@
+---
+- name: Reload systemd daemon.
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  listen: daemon reload
+
+- name: Restart nebula.
+  ansible.builtin.service:
+    name: nebula
+    enabled: yes
+    state: restarted
+  listen: restart nebula
+
+- name: Reload nebula.
+  ansible.builtin.service:
+    name: nebula
+    state: reloaded
+  listen: reload nebula

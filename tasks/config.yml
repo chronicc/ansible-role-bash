@@ -1,0 +1,12 @@
+---
+- name: Configure nebula.
+  tags: config
+  block:
+    - name: Write nebula config file.
+      ansible.builtin.template:
+        src: config.yml.j2
+        dest: "{{ nebula_config_dir }}/{{ nebula_config_file }}"
+        mode: "0644"
+        lstrip_blocks: yes
+        trim_blocks: yes
+      notify: reload nebula
